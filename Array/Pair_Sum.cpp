@@ -1,43 +1,41 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-vector<int> Pair_Sum(vector<int> v, int target)
+vector<int> PairSum(vector<int> nums, int target)
 {
-    // int left = 0;
-    // int right = 0;
-    int sum = 0;
+    int size = nums.size();
+
     vector<int> ans;
-    for (int i = 0; i < v.size() - 1; i++)
+
+    int i = 0, j = size - 1;
+    while (i < j)
     {
-        // sum += v[i];
-        // int element = v[i];
-        for (int j = 1; j < v.size(); j++)
+        int pairSum = nums[i] + nums[j];
+        if (pairSum > target)
         {
-            if ((v[i] + v[j]) > target)
-                continue;
-            if ((v[i] + v[j]) == target)
-            {
-                ans.push_back(i);
-                ans.push_back(j);
-                // cout << sum << endl;
-                return ans;
-            }
+            j--;
         }
-        // sum = 0;
+        else if (pairSum < target)
+        {
+            i++;
+        }
+        else if (pairSum == target)
+        {
+            ans.push_back(i);
+            ans.push_back(j);
+            return ans;
+        }
     }
-    ans.push_back(-1);
     return ans;
 }
 int main()
 {
 
-    vector<int> v = {1, 2, 3, 4, 5};
-    int target = 5;
-    vector<int> ans = Pair_Sum(v, target);
+    vector<int> nums = {1, 2, 3, 5, 7, 9};
+    int target = 8;
 
-    for (auto n : ans)
-    {
-        cout << n << " ";
-    }
+    vector<int> ans = PairSum(nums, target);
+
+    cout << ans[0] << "," << ans[1] << endl;
     return 0;
 }
